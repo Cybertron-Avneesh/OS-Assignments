@@ -28,6 +28,7 @@ int main()
     fieldNumbers.insert(1);
     fieldNumbers.insert(2);
     fieldNumbers.insert(3);
+    fieldNumbers.insert(4);
     fieldNumbers.insert(9);
     vector<string> splitWords;
 
@@ -56,19 +57,20 @@ int main()
                     token = line.substr(0, pos);
                     splitWords.push_back(token);
                    // cout << token <<endl;
-                    line.erase(0, pos + sizeof(delim));
+                    line.erase(0, pos + 1);
                 }
+                 splitWords.push_back(line);
                 for (auto i:fieldNumbers)
                 {
                      if(i-1>splitWords.size())
-                     cout<<" ";
+                   {  cout<<" ";
+                   }
                      else
                      {
-                        cout<<splitWords[i-1]<<delim;
+                       cout<<splitWords[i-1]<<delim;
                      }
                                
                 }
-                
                 cout<<endl;
                 line.clear();
                 splitWords.clear();
