@@ -23,7 +23,7 @@ int main()
     char buffer;
     int i = 0;
     string line;
-    char delim = ';';
+    string delim = ";";
     set<int> fieldNumbers;
     fieldNumbers.insert(1);
     fieldNumbers.insert(2);
@@ -56,7 +56,7 @@ int main()
                     token = line.substr(0, pos);
                     splitWords.push_back(token);
                    // cout << token <<endl;
-                    line.erase(0, pos + 1);
+                    line.erase(0, pos + sizeof(delim));
                 }
                 for (auto i:fieldNumbers)
                 {
