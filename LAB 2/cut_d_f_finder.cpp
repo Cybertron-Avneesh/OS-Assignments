@@ -9,7 +9,7 @@ using namespace std;
        {
            int c;
            int digit_optind = 0;
-           string delimiter=NULL, fieldNumber=NULL;
+           string delimiter, fieldNumber;
 
            while (1) {
                int this_option_optind = optind ? optind : 1;
