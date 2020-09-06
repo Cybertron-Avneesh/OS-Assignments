@@ -23,11 +23,11 @@ int main()
     char buffer;
     int i = 0;
     string line;
-    char delim = 'E';
+    char delim = ';';
     set<int> fieldNumbers;
-    //fieldNumbers.insert(1);
-    //fieldNumbers.insert(2);
-    fieldNumbers.insert(3);
+    fieldNumbers.insert(1);
+    fieldNumbers.insert(2);
+    //fieldNumbers.insert(3);
     //fieldNumbers.insert(4);
     //fieldNumbers.insert(9);
     vector<string> splitWords;
@@ -70,7 +70,13 @@ int main()
                     else
                     {
                         //cout << "possible error :- " <<i<< " "<<splitWords.size()<<endl;
-                        cout << splitWords[i - 1] ;
+                        if(i==(splitWords.size()-1)||i==*fieldNumbers.rbegin())
+                        cout << splitWords[i - 1];
+                        else
+                        {
+                           cout << splitWords[i - 1]<<delim;
+                        }
+                        
                              
                     }
                 }
