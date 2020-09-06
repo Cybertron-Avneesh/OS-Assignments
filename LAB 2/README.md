@@ -12,3 +12,30 @@
 - [ ] Code
 - [ ] Audio clips
 - [ ] I/O Screenshots
+
+## How to use
+ - Compile finalcode.cpp.
+
+`g++ finalcode.cpp -o mycut.out`
+ - Execute binary file with following options
+ 
+ `./mycut.out`
+ 
+ `./mycut.out -f`
+ 
+ `./mycut.out -f 1`
+ 
+ `./mycut.out -d`
+ 
+ `./mycut.out -d ";"`
+ 
+ `./mycut.out -d ";" -f 1`
+ 
+ `./mycut.out -d ";" -f 1,3,5 abc.txt`
+ 
+ `./mycut.out -d ";" -f 1-3 abc.txt`
+
+ `./mycut.out -d ";" -f -q -w -e -r`
+ 
+Note: Some of the above commands will give error.
+ 
