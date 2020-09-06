@@ -27,8 +27,8 @@ int main()
     set<int> fieldNumbers;
     fieldNumbers.insert(1);
     fieldNumbers.insert(2);
-    //fieldNumbers.insert(3);
-    //fieldNumbers.insert(4);
+    fieldNumbers.insert(3);
+    fieldNumbers.insert(4);
     //fieldNumbers.insert(9);
     vector<string> splitWords;
 
@@ -49,40 +49,48 @@ int main()
 
             if (buffer == '\n')
             {
-
                 size_t pos = 0;
-                string token;
-                while ((pos = line.find(delim)) != string::npos)
+                if ((pos = line.find(delim)) == string::npos)
                 {
-                    token = line.substr(0, pos);
-                    splitWords.push_back(token);
-                   // cout << token << endl;
-                    line.erase(0, pos + sizeof(delim));
+                    cout << line << endl;
+                    line.clear();
+                    splitWords.clear();
                 }
-                splitWords.push_back(line);
-              //  cout << "outside loop" << endl;
-                for (auto i : fieldNumbers)
+                else
                 {
-                    if (i - 1 >=splitWords.size())
+                    pos = 0;
+                    string token;
+                    vector<string> printWord;
+                    while ((pos = line.find(delim)) != string::npos)
                     {
-                        cout << " ";
+                        token = line.substr(0, pos);
+                        splitWords.push_back(token);
+                        // cout << token << endl;
+                        line.erase(0, pos + sizeof(delim));
                     }
-                    else
+                    splitWords.push_back(line);
+                    //  cout << "outside loop" << endl;
+                    for (auto i : fieldNumbers)
                     {
-                        //cout << "possible error :- " <<i<< " "<<splitWords.size()<<endl;
-                        if(i==(splitWords.size()-1)||i==*fieldNumbers.rbegin())
-                        cout << splitWords[i - 1];
+                        if (i - 1 < splitWords.size())
+                        {
+                            printWord.push_back(splitWords[i - 1]);
+                        }
+                    }
+                    for (int i = 0; i < printWord.size(); i++)
+                    {
+                        if (i == (printWord.size() - 1))
+                            cout << printWord[i];
                         else
                         {
-                           cout << splitWords[i - 1]<<delim;
+                            cout << printWord[i] << delim;
                         }
-                        
-                             
                     }
+                    cout << endl;
+                    line.clear();
+                    splitWords.clear();
+                    printWord.clear();
                 }
-                cout << endl;
-                line.clear();
-                splitWords.clear();
             }
             else
             {
