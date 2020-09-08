@@ -126,14 +126,6 @@ set<int> generateFieldNumber(string fieldString)
             break;
         }
     }
-    // if (validField == true)
-    // {
-    //     for (auto a : fieldNumbers)
-    //     {
-    //         // cout << a << " ";
-    //     }
-    //     // cout << endl;
-    // }
     if(validField == false)
     {
         cout << "mycut: invalid field value found." << endl;
@@ -218,28 +210,93 @@ int main(int argc, char **argv)
         vector<string> splitWords;
         int fileIndex = (DELEMITER_SPECIFIED)?5:((!DELEMITER_SPECIFIED)?3:argc-1);
         if(argv[fileIndex] == NULL){
-            cout<<"mycut: file pathname not found."<<endl;
+            cout<<"mycut: file pathname not provided."<<endl;
             exit(0);
         }
         int fd = open(argv[fileIndex], O_RDONLY);
         
-        if (fd == -1) // file DNE
-        {
-            perror(argv[fileIndex]);
-        }
-        else if (fd >= 0)
-        {
-            string str;
-            // cout << argv[fileIndex]<< ": File opened.\n";
+        // if (fd == -1) // file DNE
+        // {
+        //     perror(argv[fileIndex]);
+        // }
+        // else if (fd >= 0)
+        // {
+        //     string str;
+        //     // cout << argv[fileIndex]<< ": File opened.\n";
 
-            while (read(fd, &buffer, 1) == 1)
-            {   
-                if (buffer == '\n')
-                {    
-                    size_t pos = 0;
+        //     while (read(fd, &buffer, 1) == 1)
+        //     {   
+        //         if (buffer == '\n')
+        //         {    
+        //             size_t pos = 0;
+        //             string token;
+        //             while ((pos = line.find(delim)) != string::npos)
+        //             {   
+        //                 token = line.substr(0, pos);
+        //                 splitWords.push_back(token);
+        //                 // cout << token << endl;
+        //                 line.erase(0, pos + sizeof(delim));
+        //             }
+        //             splitWords.push_back(line);
+        //             //  cout << "outside loop" << endl;
+        //             for (auto i : fieldNumbers)
+        //             {
+        //                 if (i - 1 >= splitWords.size())
+        //                 {
+        //                     cout << " ";
+        //                 }
+        //                 else
+        //                 {
+        //                     //cout << "possible error :- " <<i<< " "<<splitWords.size()<<endl;
+        //                     if (i == (splitWords.size() - 1) || i == *fieldNumbers.rbegin())
+        //                         cout << splitWords[i - 1];
+        //                     else
+        //                     {
+        //                         cout << splitWords[i - 1] << delim;
+        //                     }
+        //                 }
+        //             }
+        //             cout << endl;
+        //             line.clear();
+        //             splitWords.clear();
+        //         }
+        //         else
+        //         {
+        //             line.push_back(buffer);
+        //         }
+        //     }
+        // }
+
+        if (fd == -1) // file DNE
+    {
+        // print program detail "Success or failure"
+        perror("abc.txt");
+    }
+    else if (fd >= 0)
+    {
+        string str;
+        // cout << "abc.txt"
+        //      << ": File opened.\n";
+
+        while (read(fd, &buffer, 1) == 1)
+        {
+
+            if (buffer == '\n')
+            {
+                size_t pos = 0;
+                if ((pos = line.find(delim)) == string::npos)
+                {
+                    cout << line << endl;
+                    line.clear();
+                    splitWords.clear();
+                }
+                else
+                {
+                    pos = 0;
                     string token;
+                    vector<string> printWord;
                     while ((pos = line.find(delim)) != string::npos)
-                    {   
+                    {
                         token = line.substr(0, pos);
                         splitWords.push_back(token);
                         // cout << token << endl;
@@ -249,31 +306,32 @@ int main(int argc, char **argv)
                     //  cout << "outside loop" << endl;
                     for (auto i : fieldNumbers)
                     {
-                        if (i - 1 >= splitWords.size())
+                        if (i - 1 < splitWords.size())
                         {
-                            cout << " ";
+                            printWord.push_back(splitWords[i - 1]);
                         }
+                    }
+                    for (int i = 0; i < printWord.size(); i++)
+                    {
+                        if (i == (printWord.size() - 1))
+                            cout << printWord[i];
                         else
                         {
-                            //cout << "possible error :- " <<i<< " "<<splitWords.size()<<endl;
-                            if (i == (splitWords.size() - 1) || i == *fieldNumbers.rbegin())
-                                cout << splitWords[i - 1];
-                            else
-                            {
-                                cout << splitWords[i - 1] << delim;
-                            }
+                            cout << printWord[i] << delim;
                         }
                     }
                     cout << endl;
                     line.clear();
                     splitWords.clear();
-                }
-                else
-                {
-                    line.push_back(buffer);
+                    printWord.clear();
                 }
             }
+            else
+            {
+                line.push_back(buffer);
+            }
         }
+    }
     }
     else
     {
