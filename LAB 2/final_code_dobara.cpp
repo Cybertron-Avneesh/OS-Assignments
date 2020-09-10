@@ -120,7 +120,7 @@ set<int> generateFieldNumber(string fieldString,int maxLength)
     }
 
 
-    for (int i = minField; i <maxLength; i++)
+    for (int i = minField; i <=maxLength; i++)
     {
           fieldNumbers.insert(i);   
     }
