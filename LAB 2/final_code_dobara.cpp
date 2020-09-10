@@ -285,11 +285,11 @@ int main(int argc, char **argv)
         string str;
         // cout << "abc.txt"
         //      << ": File opened.\n";
-
-        while (read(fd, &buffer, 1) == 1)
+        int endOfFile= 0;
+        while ((endOfFile= read(fd, &buffer, 1)) >=0)
         {
-
-            if (buffer == '\n')
+                  
+            if (buffer == '\n'||endOfFile==0)
             {
                 size_t pos = 0;
                 if ((pos = line.find(delim)) == string::npos)
@@ -338,6 +338,10 @@ int main(int argc, char **argv)
             else
             {
                 line.push_back(buffer);
+            }
+            if(endOfFile==0)
+            {
+                break;
             }
         }
     }
