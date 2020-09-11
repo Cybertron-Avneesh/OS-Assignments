@@ -16,8 +16,8 @@ using namespace std;
 #define ll long long int
 const ll mod = 1e9 + 7;
 
-
-set<int> generateFieldNumber(string fieldString)
+// Function to generate field number from the given fieldstring
+set<int> generateFieldNumber(string fieldString, int maxLength)
 {
     set<int> fieldNumbers;
 
@@ -26,8 +26,11 @@ set<int> generateFieldNumber(string fieldString)
     size_t pos = 0;
     string token;
 
+    int minField = 1e9;
+
     vector<string> fieldSubString;
 
+    // To split the field string with comma "," as delimeter
     while ((pos = fieldString.find(comma)) != string::npos)
     {
         token = fieldString.substr(0, pos);
@@ -71,21 +74,18 @@ set<int> generateFieldNumber(string fieldString)
             {
                 i.erase(i.begin());
                 int temp = atoi(i.c_str());
-                // cout<<temp<<endl;
+
                 for (int i = 1; i <= temp; i++)
                 {
                     fieldNumbers.insert(i);
                 }
             }
             // when '-' is at end
-            else if (*i.end() == '-')
+            else if (i.back() == '-')
             {
-                i.erase(i.end());
+                i.pop_back();
                 int temp = atoi(i.c_str());
-                for (int i = temp; i <= 100; i++)
-                {
-                    fieldNumbers.insert(i);
-                }
+                minField = min(minField, temp);
             }
             // when '-' is somewhere in the middle
             else
@@ -110,7 +110,12 @@ set<int> generateFieldNumber(string fieldString)
                 secondString.erase(secondString.begin());
 
                 int secondNumber = atoi(secondString.c_str());
-                //      cout<<firstNumber<<" "<<secondNumber<<endl;
+
+                // Decreasing range is invalid
+                if (secondNumber < firstNumber)
+                {
+                    validField = false;
+                }
                 for (int x = firstNumber; x <= secondNumber; x++)
                 {
                     fieldNumbers.insert(x);
@@ -118,6 +123,12 @@ set<int> generateFieldNumber(string fieldString)
             }
         }
     }
+
+    for (int i = minField; i <= maxLength; i++)
+    {
+        fieldNumbers.insert(i);
+    }
+
     for (auto a : fieldNumbers)
     {
         if (a == 0)
@@ -126,15 +137,7 @@ set<int> generateFieldNumber(string fieldString)
             break;
         }
     }
-    // if (validField == true)
-    // {
-    //     for (auto a : fieldNumbers)
-    //     {
-    //         // cout << a << " ";
-    //     }
-    //     // cout << endl;
-    // }
-    if(validField == false)
+    if (validField == false)
     {
         cout << "mycut: invalid field value found." << endl;
         exit(0);
@@ -165,15 +168,16 @@ int main(int argc, char **argv)
         if (c == -1)
             break;
 
-        switch (c) {
+        switch (c)
+        {
         case 'd':
-            // printf("option d with value '%s'\n", optarg);
+
             DELEMITER_SPECIFIED = true;
             delimiter = optarg[0];
             break;
 
         case 'f':
-            // printf("option f with value '%s'\n", optarg);
+
             FIELD_NUMBER_SPECIFIED = true;
             str_fieldNumber = optarg;
             break;
@@ -184,93 +188,127 @@ int main(int argc, char **argv)
     }
 
     if (optind < argc)
-    {   
+    {
         bool INVALID_OPT_FOUND = false;
-        while (optind < argc){
+        while (optind < argc)
+        {
             string _argv = argv[optind++];
-            if(_argv.length() > 1)
+            if (_argv.length() > 1)
                 continue;
-            else{
-                cout<<_argv<<" ";
+            else
+            {
+                cout << _argv << " ";
                 INVALID_OPT_FOUND = true;
-            }            
+            }
         }
         if (INVALID_OPT_FOUND)
         {
             printf(": option(s) not available.\nTry using [d] and [f] options");
-            exit(0);    
+            exit(0);
         }
-        
     }
 
-
-
-
-
-/*********************2nd Part***********************/
+    /*********************2nd Part***********************/
     if (FIELD_NUMBER_SPECIFIED)
-    {   
+    {
         char buffer;
         int i = 0;
         string line;
+        // set the delimeter either to the specififed value aur to the
+        // default value that is tab '\t'
         char delim = (DELEMITER_SPECIFIED == true) ? delimiter : '\t';
-        set<int> fieldNumbers = generateFieldNumber(str_fieldNumber);
+
         vector<string> splitWords;
-        int fileIndex = (DELEMITER_SPECIFIED)?5:((!DELEMITER_SPECIFIED)?3:argc-1);
-        if(argv[fileIndex] == NULL){
-            cout<<"mycut: file pathname not found."<<endl;
+
+        //If the delimiter is provided  by the user then filename is stored at
+        //5th position else store it  in
+        //stored at 3rd position in the argument list
+
+        int fileIndex = (DELEMITER_SPECIFIED) ? 5 : ((!DELEMITER_SPECIFIED) ? 3 : argc - 1);
+        if (argv[fileIndex] == NULL)
+        {
+            cout << "mycut: file pathname not provided." << endl;
             exit(0);
         }
+
+        //syscall to ope the file in read-only mode
         int fd = open(argv[fileIndex], O_RDONLY);
-        
+
         if (fd == -1) // file DNE
         {
+            // print program detail "Success or failure"
             perror(argv[fileIndex]);
         }
         else if (fd >= 0)
         {
             string str;
-            // cout << argv[fileIndex]<< ": File opened.\n";
 
-            while (read(fd, &buffer, 1) == 1)
-            {   
-                if (buffer == '\n')
-                {    
+            int endOfFile = 0;
+
+            //Syscall to read file  character by character and store it in a buffer
+            while ((endOfFile = read(fd, &buffer, 1)) >= 0)
+            {
+
+                //When the line does not contain the delimiter then print the whole line
+                if (buffer == '\n' || endOfFile == 0)
+                {
                     size_t pos = 0;
-                    string token;
-                    while ((pos = line.find(delim)) != string::npos)
-                    {   
-                        token = line.substr(0, pos);
-                        splitWords.push_back(token);
-                        // cout << token << endl;
-                        line.erase(0, pos + sizeof(delim));
-                    }
-                    splitWords.push_back(line);
-                    //  cout << "outside loop" << endl;
-                    for (auto i : fieldNumbers)
+                    if ((pos = line.find(delim)) == string::npos)
                     {
-                        if (i - 1 >= splitWords.size())
+                        cout << line << endl;
+                        line.clear();
+                        splitWords.clear();
+                    }
+                    else
+                    {
+                        pos = 0;
+                        string token;
+                        vector<string> printWord;
+
+                        //Split the line according to the delimiter and store the word in spliwords Array.
+                        while ((pos = line.find(delim)) != string::npos)
                         {
-                            cout << " ";
+                            token = line.substr(0, pos);
+                            splitWords.push_back(token);
+
+                            line.erase(0, pos + sizeof(delim));
                         }
-                        else
+                        splitWords.push_back(line);
+                        set<int> fieldNumbers = generateFieldNumber(str_fieldNumber, splitWords.size());
+
+                        //All the word to be printed are stored in printWord array
+                        for (auto i : fieldNumbers)
                         {
-                            //cout << "possible error :- " <<i<< " "<<splitWords.size()<<endl;
-                            if (i == (splitWords.size() - 1) || i == *fieldNumbers.rbegin())
-                                cout << splitWords[i - 1];
-                            else
+                            if (i - 1 < splitWords.size())
                             {
-                                cout << splitWords[i - 1] << delim;
+                                printWord.push_back(splitWords[i - 1]);
                             }
                         }
+
+                        //Printing the whole array printWord array
+                        for (int i = 0; i < printWord.size(); i++)
+                        {
+                            if (i == (printWord.size() - 1))
+                                cout << printWord[i];
+                            else
+                            {
+                                cout << printWord[i] << delim;
+                            }
+                        }
+                        cout << endl;
+                        line.clear();
+                        splitWords.clear();
+                        printWord.clear();
                     }
-                    cout << endl;
-                    line.clear();
-                    splitWords.clear();
                 }
                 else
                 {
                     line.push_back(buffer);
+                }
+                //Terminating the loop when end of the file is reached.
+                if (endOfFile == 0)
+                {
+                    break;
                 }
             }
         }
