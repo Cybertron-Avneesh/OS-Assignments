@@ -76,6 +76,7 @@ int getFrameNo(int pno){
   }
   /* If no free frame found, invoke your Page-Replacement-Algorithm to find victim page-no */
   int victim_page_no = enhanced_second_chance_algo();
+  // printf("%d\n",victim_page_no);
   /* Scan through the page table to get the frame-no. corresponding to the victim page-no */
   fno=PageTable[victim_page_no].frm_no;
   PageTable[victim_page_no].valid_bit=0;
@@ -94,7 +95,7 @@ void add_page_to_queue(int page_no,int ref_bit,int mod_bit){
   q1->front=q->front;
   q1->rear=q->rear;
   int count=0;
-  while(count!=no_of_frames+1){
+  while(count!=no_of_frames){
     if(q1->front->page_no==-1){
       q1->front->page_no=page_no;
       q1->front->bits.reference_bit=ref_bit;
@@ -110,7 +111,7 @@ void update_victim_page(int victim_page_no,int pno){
   q1->front=q->front;
   q1->rear=q->rear;
   int count=0;
-  while(count!=no_of_frames+1){
+  while(count!=no_of_frames){
     if(q1->front->page_no==victim_page_no){
       q1->front->page_no=pno;
       update_queue_mod_bit(pno,0);
@@ -127,7 +128,7 @@ void update_queue_ref_bit(int page_no,int ref_bit){
   q1->front=q->front;
   q1->rear=q->rear;
   int count=0;
-  while(count!=no_of_frames+1){
+  while(count!=no_of_frames){
     if(q1->front->page_no==page_no){
       q1->front->bits.reference_bit=ref_bit;
       break;
@@ -155,7 +156,7 @@ int find00(){
   q1->front=q->front;
   q1->rear=q->rear;
   int count=0;
-  while(count!=no_of_frames+1){
+  while(count!=no_of_frames){
     if(q1->front->bits.reference_bit==0 && q1->front->bits.modify_bit==0){
       return q1->front->page_no;
     }
@@ -169,7 +170,7 @@ int find01(){
   q1->front=q->front;
   q1->rear=q->rear;
   int count=0;
-  while(count!=no_of_frames+1){
+  while(count!=no_of_frames){
     if(q1->front->bits.reference_bit==0 && q1->front->bits.modify_bit==1){
       return q1->front->page_no;
     }
@@ -198,7 +199,6 @@ int enhanced_second_chance_algo(){
   int found_page_no=-1;
   found_page_no=find00();
   if(found_page_no!=-1){
-    move_pointer_to_next(found_page_no);
     return found_page_no;
   }
   else{
@@ -210,7 +210,6 @@ int enhanced_second_chance_algo(){
     else{
       found_page_no=find00();
       if(found_page_no!=-1){
-        move_pointer_to_next(found_page_no);
         return found_page_no;
       }
       else{
@@ -346,7 +345,9 @@ void updateRecord(int frm_no, int offset, char *string){
   else{
     startindx = (offset*RECORDSIZE) + 14;
     PageTable[FrameTable[frm_no]].modify_bit=1;
+    PageTable[FrameTable[frm_no]].reference_bit=1;
     update_queue_mod_bit(FrameTable[frm_no],1);
+    update_queue_ref_bit(FrameTable[frm_no],1);
     for(i = 0; i < 4; i++) Frames[frm_no][startindx++] = string[i];
   }
 }
