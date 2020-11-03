@@ -6,5 +6,9 @@ Mytarget1: mylibfuncns.o
 mylibfuncns.o: mylibfuncns.c
 	gcc mylibfuncns.c -c
 
-clean: mylibfuncns.o main
+clean:
 	rm mylibfuncns.o main
+
+refresh:
+	rm student-data.csv
+	cp student-data-copy.csv student-data.csv
