@@ -32,14 +32,10 @@ void updateRecord(int frm_no, int offset, char *string);
 
 /*  */
 int getFrameNo(int pno);
-
+int LRUEnchancedSecondChanceAlgorithm(int pno);
 void create_queue();
 struct node* create_node();
-
-int LRUEnchancedSecondChanceAlgorithm(int pno);
 int SwapOut(int fno,int old_pno);
-
 int check00(int new_page);
 int check01(int new_page);
-
 void AddNewPage(struct node *x,int new_page,int frame);

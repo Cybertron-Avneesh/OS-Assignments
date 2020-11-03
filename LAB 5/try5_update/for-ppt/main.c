@@ -28,9 +28,9 @@ int main(){
         printf("Enter the new name (4 characters):");
         scanf(" %[^\n]%*c", str);
         updateRecord(fno, offset, str);
-        printf("Printing Frame %d After the update\n", fno);
+        //printf("Printing Frame %d After the update\n", fno);
         //printFrame(fno);
-        //printf("Details of the Record after Updaed :-\n");
+        printf("Details of the Record after Updaed :-\n");
         printRecord(fno, offset);
       }
   }

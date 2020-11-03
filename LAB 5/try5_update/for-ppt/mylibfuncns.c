@@ -28,20 +28,18 @@ int page_fault_count = 0;
 pageItem PageTable[PTABLESIZE];
 
 /*  **********************    FUNCTIONS WRITTEN BY STUDENT    ************************************ */
-
 /* REWRITE THIS FUNCTION PROPERLY   */
 int getFrameNo(int pno){
   int fno;
 
-  /*  Scan through the page table to check if the page is present in memory */
-  /* If found, simply return the corresponding frame no.  */  
+  /* Replace the following two lines of codes by proper logic */
+  
   if(PageTable[pno].valid_bit){
     PageTable[pno].reference_bit=1;
     return PageTable[pno].frm_no;
   }
-
-  /* If not found, find a free frame-no. by searching the frame table */
-  /* If found, read the requested page into the free frame, and then return the corresponding frame no. */
+  /*  Scan through the page table to check if the page is present in memory */
+  /* If found, simply return the corresponding frame no.  */
   int i;
   for(i=0;i<no_of_frames;i++){
     if(FrameTable[i]==-1){
@@ -51,18 +49,21 @@ int getFrameNo(int pno){
       break;
     }
   }
-
-  /* If no free frame found, invoke your Page-Replacement-Algorithm to find victim page-no */
-  /*  Scan through the page table to get the frame-no. corresponding to the victim page-no */
-  /* Write the victim page back into the disk-file, IF modify_bit is set */
-  /* Read the requested page into the freed frame, and then return the corresponding frame no. */
+  /* If not found, find a free frame-no. by searching the frame table */
+  /* If found, read the requested page into the free frame, and then return the corresponding frame no. */
   if(i==no_of_frames){
     int victim_page=LRUEnchancedSecondChanceAlgorithm(pno);
     fno=PageTable[victim_page].frm_no;
     PageTable[victim_page].frm_no=-1;
   }
-  printf("Allocated Frame Number=%d\n",fno);
+  printf("Alloted Frame Number=%d\n",fno);
+  /* If no free frame found, invoke your Page-Replacement-Algorithm to find victim page-no */
 
+  /*  Scan through the page table to get the frame-no. corresponding to the victim page-no */
+
+  /* Write the victim page back into the disk-file, IF modify_bit is set */
+
+  /* Read the requested page into the freed frame, and then return the corresponding frame no. */
   readPage(pno, fno);
   PageTable[pno].valid_bit=1;
   return fno;
