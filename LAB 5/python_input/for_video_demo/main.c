@@ -9,9 +9,9 @@ int main(){
 
   Initialize();
   while(1){
-      printf("Enter Record No: ");
+      printf("**Press 101 to show ref, mod and val bits associated with page numbers in queue**\nEnter Record No: ");
       scanf("%d", &recno);
-      if(recno==100){
+      if(recno==101){
         printQueue();
         continue;
       }
@@ -32,9 +32,9 @@ int main(){
         printf("Enter the new name (4 characters):");
         scanf(" %[^\n]%*c", str);
         updateRecord(fno, offset, str);
-        printf("Printing Frame %d After the update\n", fno);
+        //printf("Printing Frame %d After the update\n", fno);
         //printFrame(fno);
-        //printf("Details of the Record after Updaed :-\n");
+        printf("Details of the Record after Updaed :-\n");
         printRecord(fno, offset);
       }
   }

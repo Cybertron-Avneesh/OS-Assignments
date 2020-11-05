@@ -5,3 +5,6 @@ Mytarget1: mylibfuncns.o
 
 mylibfuncns.o: mylibfuncns.c
 	gcc mylibfuncns.c -c
+
+clean:
+	rm main mylibfuncns.o

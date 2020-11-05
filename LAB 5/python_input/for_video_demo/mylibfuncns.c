@@ -18,7 +18,7 @@ typedef struct {
 struct node{
   int page_no;
   struct node *next;
-}*queue,*front,*pointer;
+}*queue,*print,*pointer;
 
 int pagesize = rec_per_page * RECORDSIZE;
 char * Frames[no_of_frames];
@@ -30,7 +30,7 @@ pageItem PageTable[PTABLESIZE];
 /*  **********************    FUNCTIONS WRITTEN BY STUDENT    ************************************ */
 
 void printQueue(){
-  struct node *fi=front;
+  struct node *fi=print;
   printf("\n");
   for(int i=0;i<no_of_frames;i++){
     int f=PageTable[fi->page_no].frm_no;
@@ -68,7 +68,7 @@ int getFrameNo(int pno){
     fno=PageTable[victim_page].frm_no;
     PageTable[victim_page].frm_no=-1;
   }
-  printf("Allocated Frame Number=%d\n",fno);
+  printf("Alloted Frame Number=%d\n",fno);
   /* If no free frame found, invoke your Page-Replacement-Algorithm to find victim page-no */
 
   /*  Scan through the page table to get the frame-no. corresponding to the victim page-no */
@@ -160,7 +160,7 @@ void create_queue(){
     start=start->next;
   }
   start->next=queue;
-  front=queue;
+  print=queue;
 }
 
 struct node* create_node(){
