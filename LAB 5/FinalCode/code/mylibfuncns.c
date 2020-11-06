@@ -124,9 +124,7 @@ int check01(int new_page){
       queue=queue->next;
       break;
     }
-    if(modify){
-      PageTable[p].reference_bit=0;
-    }
+    PageTable[p].reference_bit=0;
     queue=queue->next;
   }
   return page_no;
