@@ -167,6 +167,7 @@ int validRequests(int argc, char *argv[], bool current)
         //   cout<<dp->d_type;
     }
     closedir(dirp);
+    return 1;
 }
 int main(int argc, char *argv[])
 {
@@ -205,3 +206,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
