@@ -69,7 +69,7 @@ int validRequests(int argc,string str){
             cout<<temp<<" ";
         if(argc==3){
             if(flag==0){
-                cout<<"permission    no. of hardlinks   owner of file   user group   size   date & time modified   date & time created   file or directory name\n\n";
+                cout<<"permission    no. of hardlinks   owner of file   user group   size   date & time modified   date & time accessed last   file or directory name\n\n";
                 flag=1;
             }
             string permission=permissions(details.st_mode);
@@ -96,9 +96,9 @@ int validRequests(int argc,string str){
             localtime_r(&buffer.st_mtime, &time);
             strftime(datestring,sizeof(datestring),"%F %T",&time);
             printf(" %s   ",datestring);
-            localtime_r(&buffer.st_ctime, &time);
+            localtime_r(&buffer.st_atime, &time);
             strftime(datestring,sizeof(datestring),"%F %T",&time);
-            printf(" %s   ",datestring);
+            printf(" %s\t ",datestring);
             if(S_ISLNK(details.st_mode)){
                 char link_to[PATH_MAX];
                 ssize_t r=readlink(s.c_str(),link_to,PATH_MAX);
