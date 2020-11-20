@@ -1,0 +1,23 @@
+if (argc > 3 || (argc == 3 && strcmp(argv[1], "-L")))
+    {
+    
+        invalidRequests();
+    }
+ checks whether the given argument is valid or not
+
+   validRequests(argc, argv); executes when given arguments are valid
+
+ 
+
+* functions used *
+
+struct dirent *dp;
+struct stat buf;   
+readdir();
+opendir();
+stat();
+lstat();
+S_ISDIR();
+S_ISLNK();
+readlink();
+closedir();
