@@ -42,7 +42,7 @@ string permissions(mode_t st){
     string d=perms;
     return d;
 }
-int validRequests(int argc,string str){
+int print_directory_details(int argc,string str){
     struct stat buffer;
     struct stat details;
     string path=str;
@@ -127,19 +127,19 @@ int main(int argc, char *argv[]){
     }
     if(argc==1){
         argc= 2;
-        validRequests(argc,".");
+        print_directory_details(argc,".");
     }
     else if(argc==2){
         if(!strcmp(argv[1],"-L")){
             argc=3;
-            validRequests(argc,".");
+            print_directory_details(argc,".");
         }
         else{
-            validRequests(argc,argv[1]);
+            print_directory_details(argc,argv[1]);
         }
     }
     else{
-        validRequests(argc,argv[2]);
+        print_directory_details(argc,argv[2]);
     }
     return 0;
 }
