@@ -42,11 +42,15 @@ string permissions(mode_t st){
     string d=perms;
     return d;
 }
-int print_directory_details(int argc,string str){
+void print_directory_details(int argc,string str){
     struct stat buffer;
     struct stat details;
     string path=str;
     DIR *open_directory=opendir(path.c_str());
+    if(!open_directory){
+        perror("Not a valid path");
+        exit(-1);
+    }
     directory=readdir(open_directory);
     int flag=0;
     while(directory!= NULL){
@@ -56,11 +60,11 @@ int print_directory_details(int argc,string str){
         s+=temp;
         if(stat(s.c_str(),&buffer)==-1){
             perror("stat");
-            return errno;
+            exit(-1);
         }
         if(lstat(s.c_str(),&details)==-1){
             perror("stat");
-            return errno;
+            exit(-1);
         }
         if(S_ISDIR(buffer.st_mode)){
             temp+="/";
@@ -122,7 +126,7 @@ int print_directory_details(int argc,string str){
 }
 int main(int argc, char *argv[]){
     if (argc > 3 || (argc == 3 && strcmp(argv[1], "-L"))){
-        perror("Invalid Request");
+        printf("Invalid Request\n");
         exit(1);
     }
     if(argc==1){
@@ -130,7 +134,7 @@ int main(int argc, char *argv[]){
         print_directory_details(argc,".");
     }
     else if(argc==2){
-        if(!strcmp(argv[1],"-L")){
+        if(!strcmp(argv[1],"-L")){ 
             argc=3;
             print_directory_details(argc,".");
         }
