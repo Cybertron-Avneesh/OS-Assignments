@@ -125,7 +125,7 @@ void print_directory_details(int argc,string str){
     closedir(open_directory);
 }
 int main(int argc, char *argv[]){
-    if (argc > 3 || (argc == 3 && strcmp(argv[1], "-L"))){
+    if (argc > 3 || (argc == 3 && strcmp(argv[1],"-L"))){
         printf("Invalid Request\n");
         exit(1);
     }
@@ -139,6 +139,10 @@ int main(int argc, char *argv[]){
             print_directory_details(argc,".");
         }
         else{
+            if(argv[1][0]=='-' && argv[1]!="-L"){
+                printf("Invalid Request\n");
+                exit(1);
+            }
             print_directory_details(argc,argv[1]);
         }
     }
