@@ -1,5 +1,0 @@
-Employee_id;Employee_name;Department_name;Salary
-10001;Employee1;Electrical;20000z
-10002; Employee2; Mechanical;30000z
-10003;Employee3;Electrical;25000z
-10004; Employee4; Civil;40000z
