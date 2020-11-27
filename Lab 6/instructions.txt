@@ -1,0 +1,15 @@
+-----------------------
+Group ID - 6
+-----------------------
+
+-> Code of Question 1 is in folder Question 1 in the folder Codes
+	contains:
+	-> mini_ls.cpp
+-> Codes of Question 2 are in folder Question 2 in the folder Codes
+	contains:
+	-> client.c
+	-> server.c
+-> Use MS Office 2016 or Higher for better viewing of PPT.
+-> We have also attached PDF version of our PPT.
+	
+Thank you
