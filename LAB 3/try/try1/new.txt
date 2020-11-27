@@ -1,8 +1,0 @@
-void down(int *val,int id){
-  if(*val<=0){
-    pause();
-
-  }
-  kill(id,SIGUSR1);
-  *val = *val - 1;
-}
