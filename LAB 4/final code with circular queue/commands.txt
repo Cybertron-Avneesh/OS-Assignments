@@ -1,5 +1,0 @@
-gcc client.c -pthread -o client
-gcc server.c -pthread -o server
-gcc service1.c -pthread -o service1
-gcc service2.c -pthread -o service2
-gcc service3.c -pthread -o service3

@@ -1,0 +1,12 @@
+-> All codes are in folder codes
+	contains:
+	-> server.c
+	-> client.c
+	-> service1.c
+	-> service2.c
+	-> service3.c
+	-> Makefile
+	-> buffer.txt
+-> Makefile Instructions: 
+	1. To compile the codes, you can use: make or make all
+	2. To clear the executable files, you can use: make clean 
