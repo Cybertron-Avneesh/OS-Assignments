@@ -1,0 +1,11 @@
+-> All codes are in folder codes
+	contains:
+	-> main.c
+	-> mylibfuncns.c
+	-> myheader.h
+	-> Makefile
+	-> student-data.csv
+	
+-> Makefile Instructions: 
+	1. To compile the codes, you can use: make or make all
+	2. To clear the executable files, you can use: make clean 
