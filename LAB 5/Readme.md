@@ -1,9 +1,8 @@
-Question Statement:
+# Topic: Memory Management and Virtual Memory
+## Question Statement:
+ - Implement(Mimic) LRU Enhanced Second Chance Algorithm
 
-Implement LRU Enhanced Second Chance Algorithm
-
-
-How to test the implementation?
+### How to test the implementation?
 Execute the iteration (the ‘while’ loop) in the main program for at least 20~25 times. In these successive
 iterations, input a random sequence of record numbers, all in the range 01 and 94 (creating our simulated
 ‘reference string’), with a random choice of ‘read-only’ (only displaying the record) or ‘read & write’
@@ -21,3 +20,6 @@ obtained from your program. Repeat the experiment for different values of ‘no_
 
 ‘myheader.h’) and plot the results (no.-of-frames vs. no.-of-page-faults) for both the page replacement
 algorithms (your assigned algo. & optimal algo) in a graph.
+
+### Folder `codes` contains all the coed related to this assignment.
+### Folder `Graph` contains graph and raw data for LRU-Enhanced Second chance and Optimal Algo
